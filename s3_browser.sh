@@ -39,11 +39,26 @@ do
 		"leukemia panel" | "leukemia panel val" | "alp" | "acute leukemia panel")
 		panel_dir="ALP"
 		;;
+		"new acute leukemia panel" | "new alp")
+		panel_dir="NEW_ALP"
+		;;
 		"narsimha" | "amp" | "narasimha" | "nv2 diagnostic")
 		panel_dir="NARSIMHA"
 		;;
-		"narsimha v2" | "nv2" | "narasimha v2 ")
+		"narsimha v2" | "nv2" | "narasimha v2")
 		panel_dir="NARSIMHA_V2"
+		;;
+		"whole exome sequencing" | "exome")
+		panel_dir="EXOME"
+		;;
+		"aml mrd new")
+		panel_dir="AML_MRD_NEW"
+		;;
+		"tall rna")
+		panel_dir="TALL_RNA"
+		;;
+		"tall dna")
+		panel_dir="TALL_DNA"
 		;;
 		"mips")
 		panel_dir="MIPS"
@@ -96,7 +111,7 @@ do
 		"lsc")
 		panel_dir="LSC"
 		;;
-		"mips mrd")
+		"mips mrd" | "smmips mrd")
 		panel_dir="MIPS_MRD"
 		;;
 		*)
@@ -139,7 +154,8 @@ do
 	for j in `ls ${folder_name}/${panel_dir} | sed "s:${folder_name}/${panel_dir}::g"`
 	do 
 		fastq_file_name=$(basename $j)
-		if grep "/${folder_name}/${panel_dir}/$fastq_file_name" ${fastq_file_csv}_s3_files.dat ; then
+		folder_path="/${folder_name}/${panel_dir}/$fastq_file_name"
+		if grep "${folder_path}" ${fastq_file_csv}_s3_files.dat ; then
 			echo "ERROR: File $fastq_file_name is already present in the destination, exiting" >> ${fastq_file_csv}.info
 			exit 1
 		fi
